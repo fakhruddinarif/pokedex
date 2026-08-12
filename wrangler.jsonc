@@ -1,0 +1,9 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "pokedex",
+  "compatibility_date": "2026-08-12",
+  "assets": {
+    "directory": "./dist/pokedex/browser",
+    "not_found_handling": "single-page-application"
+  }
+}
