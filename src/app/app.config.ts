@@ -28,7 +28,7 @@ export const appConfig: ApplicationConfig = {
     ...provideTranslateService({
       lang: 'en',
       fallbackLang: 'en',
-      missingTranslationHandler: provideMissingTranslationHandler(MissingKeyHandler),
+      missingTranslationHandler: provideMissingTranslationHandler(() => new MissingKeyHandler()),
     }),
     ...provideTranslateHttpLoader({
       prefix: 'assets/i18n/',
