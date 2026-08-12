@@ -1,0 +1,48 @@
+<header
+  class="flex h-14 items-center justify-between px-4 backdrop-blur-sm md:px-6"
+>
+  <!-- Brand / app title -->
+  <div class="flex items-center gap-2.5">
+    <i class="ri-pokeball-fill text-2xl text-brand-hover"></i>
+    <div class="leading-tight">
+      <p class="text-sm font-semibold text-primary">{{ 'app.name' | translate }}</p>
+      <p class="hidden text-xs text-tertiary sm:block">{{ 'app.tagline' | translate }}</p>
+    </div>
+  </div>
+
+  <!-- Right controls -->
+  <div class="flex items-center gap-1 md:gap-2">
+    @if (availableLangs.length > 1) {
+      <button
+        type="button"
+        (click)="toggleLanguage()"
+        class="flex h-9 items-center gap-1.5 rounded-button px-2.5 text-sm font-medium text-secondary hover:bg-surface-hover"
+        [attr.aria-label]="'header.language' | translate"
+        [title]="'header.language' | translate"
+      >
+        <i class="ri-global-line text-lg text-tertiary"></i>
+        <span class="uppercase">{{ currentLang() }}</span>
+      </button>
+    }
+
+    <button
+      type="button"
+      (click)="toggleTheme()"
+      class="grid h-9 w-9 place-items-center rounded-button text-secondary hover:bg-surface-hover"
+      [attr.aria-label]="'header.theme' | translate"
+      [title]="'header.theme' | translate"
+    >
+      <i class="text-lg" [class.ri-moon-line]="theme() === 'light'" [class.ri-sun-line]="theme() === 'dark'"></i>
+    </button>
+
+    <button
+      type="button"
+      (click)="toggleFullscreen()"
+      class="hidden h-9 w-9 place-items-center rounded-button text-secondary hover:bg-surface-hover md:grid"
+      [attr.aria-label]="(isFullscreen() ? 'header.exitFullscreen' : 'header.fullscreen') | translate"
+      [title]="(isFullscreen() ? 'header.exitFullscreen' : 'header.fullscreen') | translate"
+    >
+      <i class="text-lg" [class.ri-fullscreen-line]="!isFullscreen()" [class.ri-fullscreen-exit-line]="isFullscreen()"></i>
+    </button>
+  </div>
+</header>

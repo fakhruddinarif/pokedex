@@ -1,0 +1,38 @@
+<nav
+  class="flex flex-wrap items-center justify-center gap-1.5"
+  role="navigation"
+  [attr.aria-label]="'pagination.page' | translate"
+>
+  <button
+    type="button"
+    class="flex h-9 min-w-[2.25rem] items-center justify-center gap-1 rounded-button border border-visible bg-surface px-3 text-[0.82rem] font-semibold text-secondary transition-[background,color,transform] duration-150 hover:bg-surface-hover hover:text-primary active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
+    [disabled]="!canPrev()"
+    (click)="prev()"
+    [attr.aria-label]="'pagination.prev' | translate"
+  >
+    <i class="ri-arrow-left-s-line text-lg leading-none" aria-hidden="true"></i>
+    <span class="hidden sm:inline">{{ 'pagination.prev' | translate }}</span>
+  </button>
+
+  @for (p of window(); track trackPage(p)) {
+    <button
+      type="button"
+      class="h-9 min-w-[2.25rem] rounded-button border border-visible bg-surface px-2.5 font-semibold tabular-nums text-secondary text-[0.82rem] transition-[background,color,transform] duration-150 hover:bg-surface-hover hover:text-primary active:scale-95 disabled:opacity-100 disabled:cursor-default"
+      [class]="p === current() ? '!border-transparent bg-brand text-brand-contrast shadow-[0_2px_6px_-1px_color-mix(in_srgb,var(--brand)_50%,transparent)]' : ''"
+      [disabled]="p === current()"
+      (click)="go(p)"
+      [attr.aria-current]="p === current() ? 'page' : null"
+    >{{ p }}</button>
+  }
+
+  <button
+    type="button"
+    class="flex h-9 min-w-[2.25rem] items-center justify-center gap-1 rounded-button border border-visible bg-surface px-3 text-[0.82rem] font-semibold text-secondary transition-[background,color,transform] duration-150 hover:bg-surface-hover hover:text-primary active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
+    [disabled]="!canNext()"
+    (click)="next()"
+    [attr.aria-label]="'pagination.next' | translate"
+  >
+    <span class="hidden sm:inline">{{ 'pagination.next' | translate }}</span>
+    <i class="ri-arrow-right-s-line text-lg leading-none" aria-hidden="true"></i>
+  </button>
+</nav>

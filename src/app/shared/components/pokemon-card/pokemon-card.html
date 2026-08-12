@@ -1,0 +1,71 @@
+<article
+  role="button"
+  tabindex="0"
+  class="poke-card group relative flex h-full cursor-pointer flex-col items-center gap-3 overflow-hidden rounded-card border-2 border-accent-card bg-accent-card p-5 shadow-card transition-[transform,box-shadow,border-color] duration-200 ease-out animate-poke-card-enter hover:-translate-y-1 hover:border-accent hover:shadow-accent-hover focus:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+  [attr.aria-label]="name + ' #' + pokemon().code"
+  [ngStyle]="styleVars()"
+  [style.animation-delay]="enterDelay + 'ms'"
+  (click)="onActivate()"
+  (keydown.enter)="onActivate()"
+  (keydown.space)="$event.preventDefault(); onActivate()"
+>
+  <!-- Top accent line (revealed on hover) -->
+  <span
+    class="pointer-events-none absolute inset-x-0 top-0 h-[3px] bg-gradient-to-r from-transparent via-[var(--accent)] to-transparent opacity-0 transition-opacity duration-200 group-hover:opacity-100"
+    aria-hidden="true"
+  ></span>
+
+  <!-- Number badge (top-left) -->
+  <span
+    class="absolute left-2 top-2 rounded-pill bg-accent-soft px-2 py-0.5 font-mono text-[0.72rem] font-bold tracking-wider text-primary"
+  >#{{ pokemon().code }}</span>
+
+  <!-- Type indicator pill (top-right) -->
+  <span
+    class="type-pill pointer-events-none absolute right-2 top-2 h-[0.55rem] w-6 rounded-pill bg-[var(--accent)] ring-accent transition-[width] duration-200 group-hover:w-[2.1rem]"
+    aria-hidden="true"
+    [title]="typeLabel"
+  ></span>
+
+  <!-- Circular image capsule -->
+  <div
+    class="capsule-soft grid h-[130px] w-[130px] place-items-center rounded-full transition-transform duration-300 ease-out group-hover:scale-[1.06] group-hover:capsule-hover"
+  >
+    <img
+      class="h-[82%] w-[82%] object-contain [filter:saturate(118%)_brightness(106%)] transition-transform duration-300 group-hover:scale-[1.04]"
+      [src]="pokemon().image || 'assets/images/pokemon-ball.png'"
+      [alt]="name"
+      loading="lazy"
+      decoding="async"
+      (error)="onImageError($event)"
+    />
+  </div>
+
+  <!-- Name -->
+  <h3
+    class="m-0 w-full truncate text-center text-base font-semibold transition-[transform,color] duration-200 group-hover:scale-[1.06] group-hover:text-accent"
+    [title]="name"
+  >{{ name }}</h3>
+
+  <!-- Stats: weight + height -->
+  <div class="flex w-full justify-around gap-1">
+    <div class="text-center">
+      <small class="block text-[0.66rem] uppercase tracking-wider text-tertiary">{{ 'pokemon.weight' | translate }}</small>
+      <span class="mt-0.5 inline-block rounded-pill bg-accent-soft px-2 py-0.5 text-[0.8rem] font-semibold tabular-nums">
+        {{ weightKg }} {{ 'pokemon.weightUnit' | translate }}
+      </span>
+    </div>
+    <div class="text-center">
+      <small class="block text-[0.66rem] uppercase tracking-wider text-tertiary">{{ 'pokemon.height' | translate }}</small>
+      <span class="mt-0.5 inline-block rounded-pill bg-accent-soft px-2 py-0.5 text-[0.8rem] font-semibold tabular-nums">
+        {{ heightM }} {{ 'pokemon.heightUnit' | translate }}
+      </span>
+    </div>
+  </div>
+
+  <!-- Types row -->
+  <div class="mt-auto w-full text-center">
+    <small class="block text-[0.66rem] uppercase tracking-wider text-tertiary">{{ 'pokemon.types' | translate }}</small>
+    <span class="mt-0.5 inline-block w-full truncate text-[0.78rem] font-semibold text-secondary" [title]="typeLabel">{{ typeLabel }}</span>
+  </div>
+</article>

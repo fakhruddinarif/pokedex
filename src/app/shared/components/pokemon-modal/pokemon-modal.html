@@ -1,0 +1,113 @@
+@if (isOpen() && pokemon(); as p) {
+  <div
+    class="fixed inset-0 z-50 grid place-items-center bg-black/55 p-4 backdrop-blur-[2px] animate-fade-in"
+    [ngStyle]="styleVars()"
+    (click)="onBackdropClick($event)"
+  >
+    <div
+      class="flex max-h-[calc(100dvh-2rem)] w-full max-w-[560px] flex-col overflow-hidden rounded-modal border border-[color-mix(in_srgb,var(--accent)_35%,var(--border))] bg-surface text-primary shadow-modal animate-pop-in"
+      role="dialog"
+      aria-modal="true"
+      [attr.aria-label]="'pokemon.detailTitle' | translate"
+    >
+      <!-- Header -->
+      <header
+        class="relative border-b border-default px-6 pb-5 pt-5 [background:radial-gradient(140%_110%_at_50%_0%,color-mix(in_srgb,var(--accent)_14%,var(--surface)),var(--surface)_70%)]"
+      >
+        <button
+          type="button"
+          class="absolute right-3 top-3 grid h-8 w-8 place-items-center rounded-button border-transparent bg-transparent text-tertiary transition-[color,background] duration-150 hover:bg-surface-hover hover:text-primary"
+          (click)="close()"
+          [attr.aria-label]="'common.close' | translate"
+        >
+          <i class="ri-close-line text-xl" aria-hidden="true"></i>
+        </button>
+
+        <div class="flex items-center gap-4">
+          <div
+            class="capsule-soft grid h-[132px] w-[132px] shrink-0 place-items-center rounded-full"
+          >
+            <img
+              class="h-[84%] w-[84%] object-contain [filter:saturate(118%)_brightness(106%)]"
+              [src]="p.image || 'assets/images/pokemon-ball.png'"
+              [alt]="name"
+              loading="lazy"
+              (error)="onImageError($event)"
+            />
+          </div>
+          <div class="min-w-0">
+            <div class="font-mono text-[0.78rem] font-bold tracking-wider text-accent">#{{ p.code }}</div>
+            <h2 class="mt-1 mb-1.5 text-2xl font-bold leading-tight">{{ name }}</h2>
+            <div class="flex flex-wrap gap-1.5">
+              @for (t of p.types; track t.name) {
+                <app-type-badge [type]="t.name" />
+              }
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Body -->
+      <div class="overflow-y-auto px-6 pb-7 pt-4">
+        <!-- Stats trio -->
+        <div class="mb-5 grid grid-cols-3 gap-2">
+          <div class="rounded-card border border-default bg-surface-hover p-3 text-center">
+            <small class="block text-[0.66rem] uppercase tracking-wider text-tertiary">{{ 'pokemon.weight' | translate }}</small>
+            <span class="mt-1 block text-base font-bold tabular-nums">{{ weightKg }} {{ 'pokemon.weightUnit' | translate }}</span>
+          </div>
+          <div class="rounded-card border border-default bg-surface-hover p-3 text-center">
+            <small class="block text-[0.66rem] uppercase tracking-wider text-tertiary">{{ 'pokemon.height' | translate }}</small>
+            <span class="mt-1 block text-base font-bold tabular-nums">{{ heightM }} {{ 'pokemon.heightUnit' | translate }}</span>
+          </div>
+          <div class="rounded-card border border-default bg-surface-hover p-3 text-center">
+            <small class="block text-[0.66rem] uppercase tracking-wider text-tertiary">{{ 'pokemon.id' | translate }}</small>
+            <span class="mt-1 block text-base font-bold tabular-nums">#{{ p.code }}</span>
+          </div>
+        </div>
+
+        <!-- Types -->
+        <section class="mt-5">
+          <h4 class="mb-2 text-[0.78rem] font-bold uppercase tracking-wider text-tertiary">{{ 'pokemon.types' | translate }}</h4>
+          <div class="flex flex-wrap gap-1.5">
+            @for (t of p.types; track t.name) {
+              <app-type-badge [type]="t.name" />
+            }
+          </div>
+        </section>
+
+        <!-- Abilities -->
+        <section class="mt-5">
+          <h4 class="mb-2 text-[0.78rem] font-bold uppercase tracking-wider text-tertiary">{{ 'pokemon.abilities' | translate }}</h4>
+          <div class="flex flex-wrap gap-1.5">
+            @for (a of abilities; track trackAbility($index, a)) {
+              <span
+                class="inline-flex items-center gap-1.5 rounded-pill border border-default bg-surface-hover px-3 py-1.5 text-sm font-semibold text-secondary"
+                [class.opacity-70]="a.hidden"
+              >
+                <span class="h-1.5 w-1.5 rounded-full bg-[var(--accent)]" aria-hidden="true"></span>
+                {{ a.label }}
+                @if (a.hidden) {
+                  <small class="text-tertiary text-[0.66rem]">({{ 'pokemon.hiddenAbility' | translate }})</small>
+                }
+              </span>
+            }
+          </div>
+        </section>
+
+        <!-- Moves -->
+        <section class="mt-5">
+          <h4 class="mb-2 text-[0.78rem] font-bold uppercase tracking-wider text-tertiary">{{ 'pokemon.moves' | translate }}</h4>
+          @if (moves.length > 0) {
+            <div class="grid grid-cols-[repeat(auto-fill,minmax(140px,1fr))] gap-1 text-[0.78rem] text-secondary">
+              @for (m of moves; track m) {
+                <span class="overflow-hidden truncate whitespace-nowrap rounded-input bg-surface-hover px-2 py-1" [title]="m">{{ m }}</span>
+              }
+            </div>
+          } @else {
+            <p class="text-center text-[0.78rem] text-tertiary">{{ 'common.empty' | translate }}</p>
+          }
+        </section>
+      </div>
+    </div>
+  </div>
+}

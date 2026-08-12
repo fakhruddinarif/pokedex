@@ -1,1 +1,271 @@
-/* You can add global styles to this file, and also import other style files */
+/* =====================================================================
+   Pokedex — Global styles & Tailwind v4 theme
+   Design language adapted from SIGAP (references/tokens.md, components.md)
+   Primary brand color swapped: #1B5E20 (green) → #FFC349 (amber/gold).
+   --------------------------------------------------------------------
+   Contrast note: #FFC349 is a light tint. For accessible primary
+   actions, foreground text/icons sit on #FFC349 use gray-900 (dark),
+   NOT white. White stays for status colors (success/error/info/etc.)
+   ===================================================================== */
+
+@import "tailwindcss";
+@import "remixicon/fonts/remixicon.css";
+
+/* Class-based dark mode: toggling `.dark` on <html> */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* =====================================================================
+   DESIGN TOKENS (Tailwind v4 CSS-first @theme)
+   ===================================================================== */
+@theme {
+  /* ---- Brand / Amber — primary #FFC349 ---- */
+  --color-brand-50: #fffdf5;
+  --color-brand-100: #fff7e0;
+  --color-brand-200: #ffefb8;
+  --color-brand-300: #ffe38f;
+  --color-brand-400: #ffd26b;
+  --color-brand-500: #ffc349; /* <-- Primary brand */
+  --color-brand-600: #e5a82e; /* Hover state */
+  --color-brand-700: #c08820; /* Pressed state */
+  --color-brand-800: #956818;
+  --color-brand-900: #6e4d10;
+  --color-brand-950: #3f2c09;
+
+  /* ---- Neutral (cool gray) ---- */
+  --color-neutral-50: #f9fafb;
+  --color-neutral-100: #f3f4f6;
+  --color-neutral-200: #e5e7eb;
+  --color-neutral-300: #d1d5db;
+  --color-neutral-400: #9ca3af;
+  --color-neutral-500: #6b7280;
+  --color-neutral-600: #4b5563;
+  --color-neutral-700: #374151;
+  --color-neutral-800: #1f2937;
+  --color-neutral-900: #111827;
+  --color-neutral-950: #030712;
+
+  /* ---- Status colors ---- */
+  --color-success-50: #f0fdf4;
+  --color-success-100: #bbf7d0;
+  --color-success-500: #16a34a;
+  --color-success-600: #15803d;
+
+  --color-warning-50: #fffbeb;
+  --color-warning-100: #fde68a;
+  --color-warning-500: #d97706;
+  --color-warning-600: #b45309;
+
+  --color-error-50: #fef2f2;
+  --color-error-100: #fecaca;
+  --color-error-500: #dc2626;
+  --color-error-600: #b91c1c;
+
+  --color-info-50: #eff6ff;
+  --color-info-100: #bfdbfe;
+  --color-info-500: #3b82f6;
+  --color-info-600: #2563eb;
+
+  /* ---- Radii ---- */
+  --radius-card: 8px;
+  --radius-button: 8px;
+  --radius-input: 6px;
+  --radius-modal: 12px;
+  --radius-pill: 999px;
+
+  /* ---- Shadows ---- */
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-dropdown: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-modal: 0 12px 32px rgba(0, 0, 0, 0.12);
+
+  /* ---- Fonts ---- */
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "Cascadia Code", Consolas, monospace;
+
+  /* ---- Animations ---- */
+  --animate-poke-card-enter: poke-card-enter 360ms cubic-bezier(0.22, 1, 0.36, 1);
+  --animate-pop-in: pop-in 240ms cubic-bezier(0.22, 1, 0.36, 1);
+  --animate-fade-in: fade-in 200ms ease;
+  --animate-skeleton: sk-shimmer 1.4s infinite ease-in-out;
+  --animate-bounce-y: bounce-y 0.4s linear infinite alternate;
+}
+
+/* Keyframes — registered globally so Tailwind `animate-*` utilities resolve. */
+@keyframes poke-card-enter {
+  from { opacity: 0; transform: translateY(14px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes pop-in {
+  from { opacity: 0; transform: scale(0.95) translateY(8px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes sk-shimmer {
+  100% { transform: translateX(100%); }
+}
+@keyframes bounce-y {
+  0%   { transform: translateY(-10%); }
+  100% { transform: translateY(10%); }
+}
+
+/* =====================================================================
+   SEMANTIC SURFACE TOKENS (CSS variables)
+   Driven by `.dark` class on <html> for theme switching.
+   ===================================================================== */
+@layer base {
+  :root {
+    --background: #faf7ed;
+    --bg-gradient: linear-gradient(180deg, #fffaf0 0%, #fff5d6 25%, #faecc8 50%, #f5e6be 100%);
+    --surface: #ffffff;
+    --surface-hover: #f3f4f6;
+    --border: #e5e7eb;
+    --border-visible: #d1d5db;
+    --text-primary: #111827;
+    --text-secondary: #4b5563;
+    --text-tertiary: #6b7280;
+    --text-disabled: #9ca3af;
+    --brand: #ffc349;
+    --brand-hover: #e5a82e;
+    --brand-subtle: #fff7e0;
+    --brand-contrast: #111827; /* text on brand light surface */
+    --success: #16a34a;
+    --success-subtle: #f0fdf4;
+    --warning: #d97706;
+    --warning-subtle: #fffbeb;
+    --error: #dc2626;
+    --error-subtle: #fef2f2;
+    --info: #3b82f6;
+    --info-subtle: #eff6ff;
+  }
+
+  .dark {
+    --background: #0c0a08;
+    --bg-gradient: linear-gradient(180deg, #2a2008 0%, #1a1408 30%, #0c0a08 70%, #030712 100%);
+    --surface: #111827;
+    --surface-hover: #1f2937;
+    --border: #1f2937;
+    --border-visible: #374151;
+    --text-primary: #f9fafb;
+    --text-secondary: #d1d5db;
+    --text-tertiary: #6b7280;
+    --text-disabled: #4b5563;
+    --brand: #ffd26b; /* brightened for dark */
+    --brand-hover: #ffe38f;
+    --brand-subtle: #3f2c09;
+    --brand-contrast: #030712;
+    --success: #22c55e;
+    --success-subtle: #052e16;
+    --warning: #f59e0b;
+    --warning-subtle: #451a03;
+    --error: #ef4444;
+    --error-subtle: #450a0a;
+    --info: #60a5fa;
+    --info-subtle: #172554;
+  }
+
+  html {
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background: var(--bg-gradient);
+    background-attachment: fixed;
+    color: var(--text-primary);
+    margin: 0;
+    min-height: 100dvh;
+  }
+
+  /* Theme-aware scrollbars. */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-visible) transparent;
+  }
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--border-visible);
+    border-radius: var(--radius-pill);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: var(--text-tertiary);
+  }
+
+  .font-mono {
+    font-family: var(--font-mono);
+  }
+}
+
+/* =====================================================================
+   UTILITY SHIMS (semantic helpers mapped to CSS variables)
+   Usage: class="bg-surface text-primary border-default"
+   These coexist with Tailwind's generated brand-NN and neutral-NN utilities.
+   ===================================================================== */
+@layer utilities {
+  .bg-background { background-color: var(--background); }
+  .bg-surface { background-color: var(--surface); }
+  .bg-surface-hover { background-color: var(--surface-hover); }
+  .bg-brand-subtle { background-color: var(--brand-subtle); }
+  .bg-brand { background-color: var(--brand); }
+
+  .text-primary { color: var(--text-primary); }
+  .text-secondary { color: var(--text-secondary); }
+  .text-tertiary { color: var(--text-tertiary); }
+  .text-disabled { color: var(--text-disabled); }
+  .text-brand { color: var(--brand); }
+  .text-brand-contrast { color: var(--brand-contrast); }
+
+  .border-default { border-color: var(--border); }
+  .border-visible { border-color: var(--border-visible); }
+  .border-brand { border-color: var(--brand); }
+
+  .rounded-card { border-radius: var(--radius-card); }
+  .rounded-button { border-radius: var(--radius-button); }
+  .rounded-input { border-radius: var(--radius-input); }
+  .rounded-modal { border-radius: var(--radius-modal); }
+  .rounded-pill { border-radius: var(--radius-pill); }
+
+  .shadow-card { box-shadow: var(--shadow-card); }
+  .shadow-dropdown { box-shadow: var(--shadow-dropdown); }
+  .shadow-modal { box-shadow: var(--shadow-modal); }
+
+  /* ---- Type-accent helpers (consume --accent var set per-card via [ngStyle]) ---- */
+  /* Background mixes the accent with the card surface for tinted glows. */
+  .bg-accent-card {
+    background:
+      radial-gradient(120% 90% at 50% 0%,
+        color-mix(in srgb, var(--accent) 8%, var(--surface)),
+        var(--surface) 65%);
+  }
+  .border-accent-card { border-color: var(--card-border); }
+  .shadow-accent-hover {
+    box-shadow:
+      0 10px 24px -8px var(--card-glow),
+      0 3px 10px -2px color-mix(in srgb, var(--accent) 30%, transparent);
+  }
+
+  /* Circular image capsule backdrop tinted by the pokemon's type color. */
+  .capsule-soft {
+    background:
+      radial-gradient(circle at 50% 40%, var(--accent-soft), transparent 70%),
+      linear-gradient(to bottom,
+        var(--accent-soft),
+        color-mix(in srgb, var(--accent) 6%, var(--surface)));
+    box-shadow:
+      0 0 10px 6px color-mix(in srgb, var(--accent) 9%, transparent),
+      inset 0 0 18px -6px color-mix(in srgb, var(--accent) 25%, transparent);
+  }
+  .capsule-hover {
+    box-shadow:
+      0 0 16px 8px color-mix(in srgb, var(--accent) 16%, transparent),
+      inset 0 0 22px -6px color-mix(in srgb, var(--accent) 40%, transparent);
+  }
+
+  /* Pill accents & small chips keyed off --accent. */
+  .bg-accent-soft { background-color: color-mix(in srgb, var(--accent) 18%, transparent); }
+  .text-accent { color: var(--accent); }
+  .ring-accent { box-shadow: 0 0 8px var(--card-glow); }
+}

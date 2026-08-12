@@ -1,3 +1,8 @@
 import { Routes } from '@angular/router';
 
-export const routes: Routes = [];
+import { Shell } from '@shared/layouts';
+
+export const routes: Routes = [
+  { path: '', component: Shell, title: 'Pokédex' },
+  { path: '**', redirectTo: '' },
+];

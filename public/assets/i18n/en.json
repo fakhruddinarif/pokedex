@@ -1,0 +1,56 @@
+{
+  "app": {
+    "name": "Pokedex",
+    "tagline": "Kanto Regional Dex"
+  },
+  "nav": {
+    "dashboard": "Home",
+    "pokemon": "Pokemon List",
+    "about": "About"
+  },
+  "header": {
+    "language": "Language",
+    "theme": "Theme",
+    "light": "Light",
+    "dark": "Dark",
+    "fullscreen": "Fullscreen",
+    "exitFullscreen": "Exit Fullscreen"
+  },
+  "sidebar": {
+    "menu": "Menu",
+    "collapse": "Collapse Sidebar",
+    "expand": "Expand Sidebar"
+  },
+  "footer": {
+    "rights": "All rights reserved.",
+    "disclaimer": "Data sourced from PokeAPI v2."
+  },
+  "pokemon": {
+    "listTitle": "Pokemon List",
+    "listSubtitle": "Kanto Region - #001 to #151",
+    "id": "No.",
+    "name": "Name",
+    "weight": "Weight",
+    "height": "Height",
+    "types": "Types",
+    "abilities": "Abilities",
+    "moves": "Moves",
+    "weightUnit": "kg",
+    "heightUnit": "m",
+    "detailTitle": "Pokemon Detail",
+    "hiddenAbility": "Hidden"
+  },
+  "pagination": {
+    "prev": "Previous",
+    "next": "Next",
+    "page": "Page",
+    "of": "of"
+  },
+  "common": {
+    "loading": "Loading...",
+    "retry": "Try again",
+    "close": "Close",
+    "empty": "No data",
+    "error": "Something went wrong"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "app": {
+    "name": "Pokedex",
+    "tagline": "Kanto Regional Dex"
+  },
+  "nav": {
+    "dashboard": "Beranda",
+    "pokemon": "Daftar Pokemon",
+    "about": "Tentang"
+  },
+  "header": {
+    "language": "Bahasa",
+    "theme": "Tema",
+    "light": "Terang",
+    "dark": "Gelap",
+    "fullscreen": "Layar Penuh",
+    "exitFullscreen": "Keluar Layar Penuh"
+  },
+  "sidebar": {
+    "menu": "Menu",
+    "collapse": "Lipat Sidebar",
+    "expand": "Buka Sidebar"
+  },
+  "footer": {
+    "rights": "Hak cipta dilindungi.",
+    "disclaimer": "Data bersumber dari PokeAPI v2."
+  },
+  "pokemon": {
+    "listTitle": "Daftar Pokemon",
+    "listSubtitle": "Region Kanto - #001 sampai #151",
+    "id": "Nomor",
+    "name": "Nama",
+    "weight": "Berat",
+    "height": "Tinggi",
+    "types": "Tipe",
+    "abilities": "Kemampuan",
+    "moves": "Gerakan",
+    "weightUnit": "kg",
+    "heightUnit": "m",
+    "detailTitle": "Detail Pokemon",
+    "hiddenAbility": "Tersembunyi"
+  },
+  "pagination": {
+    "prev": "Sebelumnya",
+    "next": "Berikutnya",
+    "page": "Halaman",
+    "of": "dari"
+  },
+  "common": {
+    "loading": "Memuat...",
+    "retry": "Coba lagi",
+    "close": "Tutup",
+    "empty": "Tidak ada data",
+    "error": "Terjadi kesalahan"
+  }
+}
