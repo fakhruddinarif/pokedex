@@ -3,12 +3,12 @@ import { provideRouter } from '@angular/router';
 // import { provideClientHydration } from '@angular/platform-browser';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import {
-  // provideTranslateService,
-  // provideMissingTranslationHandler,
+  provideTranslateService,
+  provideMissingTranslationHandler,
   MissingTranslationHandler,
   MissingTranslationHandlerParams,
 } from '@ngx-translate/core';
-// import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
+import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { routes } from './app.routes';
 
@@ -25,16 +25,16 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     // provideClientHydration(),
     provideHttpClient(withFetch()),
-    // ...provideTranslateService({
-    //   lang: 'en',
-    //   fallbackLang: 'en',
-    //   missingTranslationHandler: provideMissingTranslationHandler(MissingKeyHandler),
-    // }),
-    // ...provideTranslateHttpLoader({
-    //   prefix: 'assets/i18n/',
-    //   suffix: '.json',
-    //   enforceLoading: false,
-    //   useHttpBackend: false,
-    // }),
+    ...provideTranslateService({
+      lang: 'en',
+      fallbackLang: 'en',
+      missingTranslationHandler: provideMissingTranslationHandler(MissingKeyHandler),
+    }),
+    ...provideTranslateHttpLoader({
+      prefix: 'assets/i18n/',
+      suffix: '.json',
+      enforceLoading: false,
+      useHttpBackend: false,
+    }),
   ],
 };
